@@ -1,0 +1,4 @@
+create database if not exists writerblog character set utf8 collate utf8_unicode_ci;
+use writerblog;
+
+grant all privileges on writerblog.* to 'blog_user'@'localhost' identified by 'secret';
