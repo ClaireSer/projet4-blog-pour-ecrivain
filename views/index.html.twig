@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-offset-1 col-sm-10">
-                <h2><a href="{{ path('billet') }}">{{ billet.title }}</a></h2>
+                <h2><a href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></h2>
                 <p>{{ billet.content | truncate(500) }}</p>
             </div>
         </div>

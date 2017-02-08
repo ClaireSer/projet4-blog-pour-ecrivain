@@ -19,6 +19,11 @@ $app['twig'] = $app->extend('twig', function(Twig_Environment $twig, $app) {
 $app->register(new Silex\Provider\AssetServiceProvider(), array(
     'assets.version' => 'v1'
 ));
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => __DIR__.'/../var/logs/writerblog.log',
+    'monolog.name' => 'writerblog',
+    'monolog.level' => $app['monolog.level']
+));
 
 // Register services
 $app['dao.billet'] = function ($app) {

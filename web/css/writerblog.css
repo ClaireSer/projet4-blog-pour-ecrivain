@@ -26,9 +26,12 @@ h1 {
     font-style: italic;
     font-size: 40px;    
 }
-h2 a {
+h2 a, h2 a:hover {
     color: brown;
-    
+    text-decoration: none;
+}
+h2 a:hover {
+    text-shadow: 1px 1px 1px black;
 }
 .container p {
     text-align: justify;

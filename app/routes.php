@@ -3,5 +3,5 @@
 $app->get('/', "writerblog\Controller\HomeController::indexAction")
 ->bind('home');
 
-$app->get('/billet', "writerblog\Controller\HomeController::billetAction")
+$app->get('/billet/{id}', "writerblog\Controller\HomeController::billetAction")
 ->bind('billet');
