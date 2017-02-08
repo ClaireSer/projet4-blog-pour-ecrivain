@@ -1,5 +1,9 @@
 <?php
 
+namespace writerblog\DAO;
+
+use writerblog\Domain\Billet;
+
 class BilletDAO extends DAO {
 
     public function create(Billet $billet) {

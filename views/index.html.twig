@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% for billet in billets %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-10">
+                <h2><a href="{{ path('billet') }}">{{ billet.title }}</a></h2>
+                <p>{{ billet.content | truncate(500) }}</p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

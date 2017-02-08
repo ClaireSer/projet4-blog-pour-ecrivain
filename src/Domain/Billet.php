@@ -1,5 +1,7 @@
 <?php
 
+namespace writerblog\Domain;
+
 class Billet {
     private $id;
     private $title;

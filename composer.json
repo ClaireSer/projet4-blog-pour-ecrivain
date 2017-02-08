@@ -14,6 +14,6 @@
         "symfony/monolog-bridge": "~2.8|3.0.*"
     },
     "autoload": {
-        "psr-4": {"writerblog\\": "src"}
+        "psr-4": {"writerBlog\\": "src"}
     }
 }
