@@ -3,8 +3,12 @@
 namespace writerblog\DAO;
 
 use writerblog\Domain\User;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
-class UserDAO extends DAO {
+class UserDAO extends DAO implements UserProviderInterface {
 
     public function readAll() {
         $sql = "select * from t_user order by user_role, user_name";
@@ -35,5 +39,39 @@ class UserDAO extends DAO {
         $user->setSalt($row['user_salt']);
         $user->setRole($row['user_role']);        
         return $user;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function loadUserByUsername($username)
+    {
+        $sql = "select * from t_user where user_name = ?";
+        $result = $this->getDb()->fetchAssoc($sql, array($username));
+
+        if ($result)
+            return $this->buildDomainObject($result);
+        else
+            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function refreshUser(UserInterface $user)
+    {
+        $class = get_class($user);
+        if (!$this->supportsClass($class)) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
+        }
+        return $this->loadUserByUsername($user->getUsername());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supportsClass($class)
+    {
+        return 'writerblog\Domain\User' === $class;
     }
 }

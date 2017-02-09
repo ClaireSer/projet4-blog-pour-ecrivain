@@ -3,6 +3,7 @@
 {% block title %}{{ billet.title }}{% endblock %}
 
 {% block content %}
+<h1>Le blog d'un écrivain</h1>
 <div class="container">
     <div class="row">
         <div class="col-sm-offset-1 col-sm-10">
@@ -15,7 +16,21 @@
             <h3>Commentaires</h3>
             {% for comment in comments %}
                 <p><strong>{{ comment.author.username }}</strong> said : {{ comment.content }} </p>
+            {% else %}
+                <p><i>Pas de commentaire.</i></p>
             {% endfor %}
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-sm-offset-1 col-sm-10">
+            <h3>Ajouter un commentaire</h3>
+            {% if app.user %}
+                <form>
+                    <textarea></textarea>
+                </form>
+            {% else %}
+                <p><a href="{{ path('login') }}">Connectez-vous</a> pour ajouter un commentaire.</p>
+            {% endif %}
         </div>
     </div>    
 </div>

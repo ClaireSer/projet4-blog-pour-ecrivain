@@ -3,6 +3,7 @@
 namespace writerblog\Controller;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController {
     
@@ -18,6 +19,13 @@ class HomeController {
         return $app['twig']->render('billet.html.twig', array(
             'billet' => $billet,
             'comments' => $comments
+        ));
+    }
+
+    public function loginAction(Request $request, Application $app) {
+        return $app['twig']->render('login.html.twig', array(
+            // 'error'         => $app['security.last_error']($request),
+            // 'last_username' => $app['session']->get('_security.last_username')
         ));
     }
 }

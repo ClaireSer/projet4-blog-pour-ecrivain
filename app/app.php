@@ -9,6 +9,10 @@ ExceptionHandler::register();
 
 // Register service providers
 $app->register(new Silex\Provider\DoctrineServiceProvider());
+// $app->register(new Silex\Provider\LocaleServiceProvider());
+// $app->register(new Silex\Provider\TranslationServiceProvider());
+// $app->register(new Silex\Provider\ValidatorServiceProvider());
+
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
@@ -23,6 +27,25 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../var/logs/writerblog.log',
     'monolog.name' => 'writerblog',
     'monolog.level' => $app['monolog.level']
+));
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+    'security.firewalls' => array(
+        'secured' => array(
+            'pattern' => '^/',
+            'anonymous' => true,
+            'logout' => true,
+            'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+            'users' => function () use ($app) {
+                return new writerblog\DAO\UserDAO($app['db']);
+            },
+        ),
+    ),
+    'security.role_hierarchy' => array(
+        'ROLE_ADMIN' => array('ROLE_USER'),
+    ),
+    'security.access_rules' => array(
+        array('^/admin', 'ROLE_ADMIN'),
+    ),
 ));
 
 // Register services
