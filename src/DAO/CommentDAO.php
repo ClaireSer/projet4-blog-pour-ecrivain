@@ -4,13 +4,19 @@ namespace writerblog\DAO;
 
 use writerblog\Domain\Comment;
 use writerblog\DAO\BilletDAO;
+use writerblog\DAO\UserDAO;
 
 class CommentDAO extends DAO {
     
     private $billetDAO;
-
+    private $userDAO;
+    
     public function setBilletDAO(BilletDAO $billetDAO) {
         $this->billetDAO = $billetDAO;
+        return $this;
+    }
+    public function setUserDAO(UserDAO $userDAO) {
+        $this->userDAO = $userDAO;
         return $this;
     }
 
@@ -36,9 +42,10 @@ class CommentDAO extends DAO {
             $comment->setBillet($billet);
         }
         if (array_key_exists('user_id', $row)) {
-
+            $userId = $row['user_id'];
+            $author = $this->userDAO->read($userId);
+            $comment->setAuthor($author);
         }
         return $comment;
-
     }
 }

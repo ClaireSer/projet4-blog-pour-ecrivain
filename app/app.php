@@ -29,8 +29,12 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
 $app['dao.billet'] = function ($app) {
     return new writerblog\DAO\BilletDAO($app['db']);
 };
+$app['dao.user'] = function ($app) {
+    return new writerblog\DAO\UserDAO($app['db']);
+};
 $app['dao.comment'] = function ($app) {
     $commentDAO = new writerblog\DAO\CommentDAO($app['db']);
     $commentDAO->setBilletDAO($app['dao.billet']);
+    $commentDAO->setUserDAO($app['dao.user']);
     return $commentDAO;
 };

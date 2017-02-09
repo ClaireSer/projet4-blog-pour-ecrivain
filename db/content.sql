@@ -19,3 +19,7 @@ insert into t_comment values
 (1, 'Un petit commentaire !', 1, 1);
 insert into t_comment values
 (2, "Hello ! Bonjour !", 1, 2);
+insert into t_comment values
+(3, "Je ne comprends rien à ce qu'il y a d'écrit.", 2, 1);
+insert into t_comment values
+(4, "Quel beau texte !", 3, 2);
