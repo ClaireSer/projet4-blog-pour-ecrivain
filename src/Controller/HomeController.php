@@ -13,6 +13,11 @@ class HomeController {
 
     public function billetAction($id, Application $app) {
         $billet = $app['dao.billet']->read($id);
-        return $app['twig']->render('billet.html.twig', array('billet' => $billet));
+        $comments = $app['dao.comment']->readAllByIdBillet($id);
+        
+        return $app['twig']->render('billet.html.twig', array(
+            'billet' => $billet,
+            'comments' => $comments
+        ));
     }
 }
