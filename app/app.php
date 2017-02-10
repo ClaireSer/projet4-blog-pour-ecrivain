@@ -28,6 +28,7 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.name' => 'writerblog',
     'monolog.level' => $app['monolog.level']
 ));
+$app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
         'secured' => array(

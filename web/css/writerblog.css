@@ -37,6 +37,6 @@ h2 a:hover {
     text-align: justify;
     font-size: 18px;
 }
-.loginForm * {
+.loginForm * , .alert {
     font-size: 17px;
 }

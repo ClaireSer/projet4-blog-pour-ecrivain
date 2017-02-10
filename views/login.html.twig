@@ -4,25 +4,32 @@
 
 {% block content %}
     <h1> {{ block('title')}} </h1>
+
+    {% if error %}
+    <div class="alert alert-danger">
+        <strong>Login failed!</strong> {{ error }}
+    </div>
+    {% endif %}
+
     <div class="container loginForm">
         <div class="row">
             <div class="col-sm-offset-3 col-sm-6">
-                <form class="form-horizontal well">
+                <form class="form-horizontal well" action="{{ path('login_check') }} " method="post">
                     <div class="form-group">
-                        <label for="identifiant" class="control-label col-xs-3">Identifiant</label>
+                        <label for="username" class="control-label col-xs-3">Identifiant</label>
                         <div class="col-xs-8">
-                            <input type="text" class="form-control" id="identifiant" placeholder="Entrez votre identifiant">
+                            <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="Entrez votre identifiant" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="control-label col-xs-3">Mot de passe</label>
                         <div class="col-xs-8">
-                            <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
+                            <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-6">
-                            <button type="submit" class="btn btn-primary">Se connecter</button>
+                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span> Se connecter</button>
                         </div>
                     </div>
                 </form>
