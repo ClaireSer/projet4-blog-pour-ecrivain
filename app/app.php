@@ -9,8 +9,8 @@ ExceptionHandler::register();
 
 // Register service providers
 $app->register(new Silex\Provider\DoctrineServiceProvider());
-// $app->register(new Silex\Provider\LocaleServiceProvider());
-// $app->register(new Silex\Provider\TranslationServiceProvider());
+$app->register(new Silex\Provider\LocaleServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
 // $app->register(new Silex\Provider\ValidatorServiceProvider());
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
@@ -48,6 +48,8 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         array('^/admin', 'ROLE_ADMIN'),
     ),
 ));
+$app->register(new Silex\Provider\FormServiceProvider());
+
 
 // Register services
 $app['dao.billet'] = function ($app) {

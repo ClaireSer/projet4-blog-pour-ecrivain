@@ -4,6 +4,8 @@ namespace writerblog\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use writerblog\Domain\Comment;
+use writerblog\Form\Type\CommentType;
 
 class HomeController {
     
@@ -12,13 +14,25 @@ class HomeController {
         return $app['twig']->render('index.html.twig', array('billets' => $billets));
     }
 
-    public function billetAction($id, Application $app) {
+    public function billetAction($id, Request $request, Application $app) {
         $billet = $app['dao.billet']->read($id);
         $comments = $app['dao.comment']->readAllByIdBillet($id);
-        
+
+        if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $comment = new Comment();
+            $comment->setAuthor($app['user']);
+            $comment->setBillet($billet);
+            $commentForm = $app['form.factory']->create(CommentType::class, $comment);
+            $commentForm->handleRequest($request);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $app['dao.comment']->save($comment);
+                $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
+            }
+        }
         return $app['twig']->render('billet.html.twig', array(
             'billet' => $billet,
-            'comments' => $comments
+            'comments' => $comments,
+            'commentForm' => $commentForm->createView()
         ));
     }
 
