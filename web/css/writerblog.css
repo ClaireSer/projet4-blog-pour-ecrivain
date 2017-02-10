@@ -40,3 +40,9 @@ h2 a:hover {
 .loginForm * , .alert {
     font-size: 17px;
 }
+.comments strong {
+    font-size: 19px;
+}
+.comments span {
+    color: grey;
+}

@@ -10,6 +10,7 @@ class Comment {
     private $content;
     private $author;
     private $billet;
+    private $date;
 
     public function getId() {
         return $this->id;
@@ -40,6 +41,14 @@ class Comment {
     }
     public function setBillet(Billet $billet) {
         $this->billet = $billet;
+        return $this;
+    }
+
+    public function getDate() {
+        return $this->date;
+    }
+    public function setDate($date) {
+        $this->date = $date;
         return $this;
     }
 }

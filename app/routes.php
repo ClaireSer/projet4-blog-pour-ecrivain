@@ -8,3 +8,6 @@ $app->match('/billet/{id}', "writerblog\Controller\HomeController::billetAction"
 
 $app->get('/login', "writerblog\Controller\HomeController::loginAction")
 ->bind('login');
+
+$app->get('/admin', "writerblog\Controller\AdminController::indexAction")
+->bind('admin');

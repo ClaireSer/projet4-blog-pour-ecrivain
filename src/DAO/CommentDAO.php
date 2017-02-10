@@ -36,6 +36,7 @@ class CommentDAO extends DAO {
         $comment = new Comment();
         $comment->setId($row['com_id']);
         $comment->setContent($row['com_content']);
+        $comment->setDate($row['com_date']);
         if (array_key_exists('billet_id', $row)) {
             $idBillet = $row['billet_id'];
             $billet = $this->billetDAO->read($idBillet);
@@ -52,6 +53,7 @@ class CommentDAO extends DAO {
     public function save(Comment $comment) {
         $dataComment = array(
             'com_content' => $comment->getContent(),
+            'com_date' => $comment->getDate(),
             'billet_id' => $comment->getBillet()->getId(),
             'user_id' => $comment->getAuthor()->getId()
         );
@@ -62,5 +64,9 @@ class CommentDAO extends DAO {
             $id = $this->getDb()->lastInsertId();
             $comment->setId($id);
         }
+    }
+
+    public function countByIdBillet($idBillet) {
+        return $this->getDb()->executeQuery('select * from t_comment where billet_id = ?', array($ibBillet))->rowCount();
     }
 }
