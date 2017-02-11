@@ -65,8 +65,4 @@ class CommentDAO extends DAO {
             $comment->setId($id);
         }
     }
-
-    public function countByIdBillet($idBillet) {
-        return $this->getDb()->executeQuery('select * from t_comment where billet_id = ?', array($ibBillet))->rowCount();
-    }
 }

@@ -56,4 +56,9 @@ class BilletDAO extends DAO {
         $billet->setId($row['billet_id']);
         return $billet;
     }
+
+    public function countComments($idBillet) {
+        $sql = 'select * from t_comment where billet_id = ?';
+        return $this->getDb()->executeQuery($sql, array($idBillet))->rowCount();
+    }   
 }

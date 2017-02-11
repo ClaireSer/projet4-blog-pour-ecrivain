@@ -6,6 +6,7 @@ class Billet {
     private $id;
     private $title;
     private $content;
+    private $nbComments;
 
     public function getId() {
         return $this->id;
@@ -28,6 +29,14 @@ class Billet {
     }
     public function setContent($content) {
         $this->content = $content;
+        return $this;
+    }
+
+    public function getNbComments() {
+        return $this->nbComments;
+    }
+    public function setNbComments($nbComments) {
+        $this->nbComments = $nbComments;
         return $this;
     }
 }

@@ -13,9 +13,9 @@
     </div>
     <div class="row">
         <div class="col-sm-offset-1 col-sm-10 comments">
-            <h3>Commentaires</h3><span></span>
+            <h3>Commentaires <span>({{ billet.nbComments }})</span></h3>
             {% for comment in comments %}
-                <p><strong>{{ comment.author.username }}</strong><span> Posté le {{ comment.date|date("m/d/Y \\à H \\h i \\m\\i\\n") }}</span><br/>
+                <p><strong>{{ comment.author.username }}</strong><span> Posté le {{ comment.date|date("d/m/y \\à H \\h i \\m\\i\\n") }}</span><br/>
                 {{ comment.content }} </p>
             {% else %}
                 <p><i>Pas de commentaire.</i></p>
