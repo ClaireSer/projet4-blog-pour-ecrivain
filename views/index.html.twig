@@ -5,11 +5,14 @@
 {% block content %}
 <h1>Le blog d'un écrivain</h1>
 {% for billet in billets %}
-    <div class="container">
+    <div class="container index">
         <div class="row">
-            <div class="col-sm-offset-1 col-sm-10">
+            <div class="col-sm-offset-1 col-sm-4">
                 <h2><a href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></h2>
-                <p>{{ billet.content | truncate(500) }}</p>
+                <p><strong>Posté le {{ billet.dateAjout|date("d/m/y") }}</strong><br/>
+                <i>{{ billet.nbComments }} commentaires</i></p>
+                <p>{{ billet.content | truncate(200) }}</p>
+                <p><a href="{{ path('billet', { 'id': billet.id }) }}">Lire la suite</a></p>
             </div>
         </div>
     </div>

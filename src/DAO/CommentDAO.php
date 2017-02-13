@@ -32,6 +32,17 @@ class CommentDAO extends DAO {
         return $dataComment;
     }
 
+    public function readAll() {
+        $sql = "select * from t_comment order by com_id desc";
+        $result = $this->getDb()->fetchAll($sql);
+        $dataComment = array();
+        foreach ($result as $row) {
+            $commentId = $row['com_id'];
+            $dataComment[$commentId] = $this->buildDomainObject($row);
+        }
+        return $dataComment;
+    }
+
     public function buildDomainObject($row) {
         $comment = new Comment();
         $comment->setId($row['com_id']);

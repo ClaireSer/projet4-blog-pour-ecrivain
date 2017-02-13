@@ -9,7 +9,9 @@ class BilletDAO extends DAO {
     public function create(Billet $billet) {
         $billetArray = array(
             'billet_title' => $billet->getTitle(),
-            'billet_content' => $billet->getContent()
+            'billet_content' => $billet->getContent(),
+            'billet_dateAjout' => $billet->getDateAjout(),
+            'billet_nbComments' => $billet->getNbComments()
         );
         $this->getDb()->insert('t_billet', $billetArray);
         $id = $this->getDb()->lastInsertId();
@@ -37,23 +39,27 @@ class BilletDAO extends DAO {
         }
     }
 
-    public function update($id) {
+    public function update(Billet $billet) {
         $billetArray = array(
             'billet_title' => $billet->getTitle(),
-            'billet_content' => $billet->getContent()
+            'billet_content' => $billet->getContent(),
+            'billet_dateAjout' => $billet->getDateAjout(),
+            'billet_nbComments' => $billet->getNbComments()
         );
-        $this->getDb()->update('t_billet', $billetArray, array('billet_id' => $id));
+        $this->getDb()->update('t_billet', $billetArray, array('billet_id' => $billet->getId()));
     }
     
-    public function delete($id) {
-        $this->getDb()->delete('t_billet', array('billet_id' => $id));
+    public function delete(Billet $billet) {
+        $this->getDb()->delete('t_billet', array('billet_id' => $billet->getId()));
     }
     
     public function buildDomainObject($row) {
         $billet = new Billet();
+        $billet->setId($row['billet_id']);
         $billet->setTitle($row['billet_title']);
         $billet->setContent($row['billet_content']);
-        $billet->setId($row['billet_id']);
+        $billet->setDateAjout($row['billet_dateAjout']);
+        $billet->setNbComments($row['billet_nbComments']);
         return $billet;
     }
 
