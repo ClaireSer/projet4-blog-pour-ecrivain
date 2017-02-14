@@ -7,6 +7,7 @@ create table t_billet (
     billet_title varchar(100) not null,
     billet_content varchar(2000) not null,
     -- billet_dateAjout date not null
+    -- billet_dateModif date not null
 ) engine=innodb character set utf8 collate utf8_unicode_ci;
 
 create table t_user (

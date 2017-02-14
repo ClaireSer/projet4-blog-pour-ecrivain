@@ -12,11 +12,33 @@ $app->get('/login', "writerblog\Controller\HomeController::loginAction")
 $app->get('/admin', "writerblog\Controller\AdminController::indexAction")
 ->bind('admin');
 
-$app->get('/admin/billet', "writerblog\Controller\AdminController::indexAction")
-->bind('admin_billet');
 
-$app->get('/admin/comment', "writerblog\Controller\AdminController::indexAction")
-->bind('admin_comment');
+// billet controller 
+$app->match('/admin/billet/{id}/edit', "writerblog\Controller\AdminController::billetEditAction")
+->bind('admin_billet_edit');
 
-$app->get('/admin/user', "writerblog\Controller\AdminController::indexAction")
-->bind('admin_user');
+$app->match('/admin/billet/add', "writerblog\Controller\AdminController::billetAddAction")
+->bind('admin_billet_add');
+
+$app->get('/admin/billet/{id}/delete', "writerblog\Controller\AdminController::billetDeleteAction")
+->bind('admin_billet_delete');
+
+
+// // comment controller 
+// $app->get('/admin/comment/{id}/edit', "writerblog\Controller\AdminController::commentEditAction")
+// ->bind('admin_comment_edit');
+
+// $app->get('/admin/comment/delete', "writerblog\Controller\AdminController::commentDeleteAction")
+// ->bind('admin_comment_delete');
+
+
+// // user controller
+// $app->get('/admin/user/{id}/edit', "writerblog\Controller\AdminController::userEditAction")
+// ->bind('admin_user_edit');
+
+// $app->get('/admin/user/add', "writerblog\Controller\AdminController::userAddAction")
+// ->bind('admin_user_add');
+
+// $app->get('/admin/user/delete', "writerblog\Controller\AdminController::userDeleteAction")
+// ->bind('admin_user_delete');
+

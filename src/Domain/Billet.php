@@ -6,8 +6,9 @@ class Billet {
     private $id;
     private $title;
     private $content;
-    private $nbComments;
     private $dateAjout;
+    private $dateModif;
+    private $nbComments;
 
     public function getId() {
         return $this->id;
@@ -38,6 +39,14 @@ class Billet {
     }
     public function setDateAjout($dateAjout) {
         $this->dateAjout = $dateAjout;
+        return $this;
+    }
+
+    public function getDateModif() {
+        return $this->dateModif;
+    }
+    public function setDateModif($dateModif) {
+        $this->dateModif = $dateModif;
         return $this;
     }
 

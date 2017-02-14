@@ -5,6 +5,13 @@
 {% block content %}
     <div class="container admin">
         <h1>{{ block('title') }}</h1>
+
+        {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+        {% endfor %}
+
         <div class="row">
             <div class="col-sm-offset-3 col-sm-6" >
                 <ul class="nav nav-pills nav-justified">
@@ -23,6 +30,7 @@
                         <th>Titre</th>
                         <th>Contenu</th>
                         <th>Date d'ajout</th>
+                        <th>Dernière action</th>
                         <th>Modifier</th>
                         <th>Supprimer</th>
                     </tr>
@@ -33,62 +41,69 @@
                             <td><a href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></td>
                             <td>{{ billet.content|truncate(70) }}</td>
                             <td>{{ billet.dateAjout|date("d/m/y") }}</td>
-                            <td><span class="glyphicon glyphicon-wrench"></span></td>
-                            <td><span class="glyphicon glyphicon-trash"></span></td>
+                            <td>{{ billet.dateModif|date("d/m/y") }}</td>
+                            <td><a href="{{ path('admin_billet_edit', { 'id': billet.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                            <td><a href="{{ path('admin_billet_delete', { 'id': billet.id }) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+                <a href="{{ path('admin_billet_add') }}"><button type="button" class="btn btn-primary btn-outline btn-lg">Créer un nouveau billet</button></a>
             </div>
 
             <div class="row tab-pane fade" id="comments">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Contenu</th>
-                        <th>Auteur</th>
-                        <th>Billet</th>
-                        <th>Date</th>
-                        <th>Modifier</th>
-                        <th>Supprimer</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for comment in comments %}
+                <div class="col-sm-offset-1 col-sm-10">
+                    <table class="table table-striped">
+                        <thead>
                         <tr>
-                            <td>{{ comment.content }}</a></td>
-                            <td>{{ comment.author.username }}</td>
-                            <td>{{ comment.billet.title }}</td>
-                            <td>{{ comment.date|date("d/m/y") }}</td>
-                            <td><span class="glyphicon glyphicon-wrench"></span></td>
-                            <td><span class="glyphicon glyphicon-trash"></span></td>
+                            <th>Contenu</th>
+                            <th>Auteur</th>
+                            <th>Billet</th>
+                            <th>Date</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for comment in comments %}
+                            <tr>
+                                <td>{{ comment.content }}</a></td>
+                                <td>{{ comment.author.username }}</td>
+                                <td>{{ comment.billet.title }}</td>
+                                <td>{{ comment.date|date("d/m/y") }}</td>
+                                <td><span class="glyphicon glyphicon-wrench"></span></td>
+                                <td><span class="glyphicon glyphicon-trash"></span></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="row tab-pane fade" id="users">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Utilisateur</th>
-                        <th>Rôle</th>
-                        <th>Modifier</th>
-                        <th>Supprimer</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for user in users %}
+                <div class="col-sm-offset-3 col-sm-6">
+                    <table class="table table-striped">
+                        <thead>
                         <tr>
-                            <td>{{ user.username }}</a></td>
-                            <td>{{ user.role }}</td>
-                            <td><span class="glyphicon glyphicon-wrench"></span></td>
-                            <td><span class="glyphicon glyphicon-trash"></span></td>
+                            <th>Utilisateur</th>
+                            <th>Rôle</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.username }}</a></td>
+                                <td>{{ user.role }}</td>
+                                <td><span class="glyphicon glyphicon-wrench"></span></td>
+                                <td><span class="glyphicon glyphicon-trash"></span></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary btn-outline btn-lg">Ajouter un utilisateur</button>                    
+                </div>
             </div>
         </div>
     </div>

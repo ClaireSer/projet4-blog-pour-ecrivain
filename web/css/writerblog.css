@@ -68,6 +68,15 @@ h2 a:hover {
 th:nth-last-child(-n+3), td:nth-last-child(-n+3) {
     text-align: center;
 }
-th:nth-last-child(-n+2) {
-    width: 80px;
+/*color button */
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+.btn-primary.btn-outline:hover {
+    color: #fff;
 }

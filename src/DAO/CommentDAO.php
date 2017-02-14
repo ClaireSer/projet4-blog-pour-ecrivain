@@ -76,4 +76,8 @@ class CommentDAO extends DAO {
             $comment->setId($id);
         }
     }
+
+    public function deleteCommentsByIdBillet($id) {
+        $this->getDb()->delete('t_comment', array('billet_id' => $id));
+    }
 }

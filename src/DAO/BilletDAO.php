@@ -44,13 +44,14 @@ class BilletDAO extends DAO {
             'billet_title' => $billet->getTitle(),
             'billet_content' => $billet->getContent(),
             'billet_dateAjout' => $billet->getDateAjout(),
+            'billet_dateModif' => $billet->getDateModif(),
             'billet_nbComments' => $billet->getNbComments()
         );
         $this->getDb()->update('t_billet', $billetArray, array('billet_id' => $billet->getId()));
     }
     
-    public function delete(Billet $billet) {
-        $this->getDb()->delete('t_billet', array('billet_id' => $billet->getId()));
+    public function deleteBillet($id) {
+        $this->getDb()->delete('t_billet', array('billet_id' => $id));
     }
     
     public function buildDomainObject($row) {
@@ -59,6 +60,7 @@ class BilletDAO extends DAO {
         $billet->setTitle($row['billet_title']);
         $billet->setContent($row['billet_content']);
         $billet->setDateAjout($row['billet_dateAjout']);
+        $billet->setDateModif($row['billet_dateModif']);
         $billet->setNbComments($row['billet_nbComments']);
         return $billet;
     }
