@@ -32,13 +32,13 @@ $app->get('/admin/comment/{id}/delete', "writerblog\Controller\AdminController::
 ->bind('admin_comment_delete');
 
 
-// // user controller
-// $app->get('/admin/user/{id}/edit', "writerblog\Controller\AdminController::userEditAction")
-// ->bind('admin_user_edit');
+// user controller
+$app->match('/admin/user/{id}/edit', "writerblog\Controller\AdminController::userEditAction")
+->bind('admin_user_edit');
 
-// $app->get('/admin/user/add', "writerblog\Controller\AdminController::userAddAction")
-// ->bind('admin_user_add');
+$app->match('/admin/user/add', "writerblog\Controller\AdminController::userAddAction")
+->bind('admin_user_add');
 
-// $app->get('/admin/user/delete', "writerblog\Controller\AdminController::userDeleteAction")
-// ->bind('admin_user_delete');
+$app->get('/admin/user/{id}/delete', "writerblog\Controller\AdminController::userDeleteAction")
+->bind('admin_user_delete');
 

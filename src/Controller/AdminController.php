@@ -4,8 +4,10 @@ namespace writerblog\Controller;
 
 use Silex\Application;
 use writerblog\Domain\Billet;
+use writerblog\Domain\User;
 use writerblog\Form\Type\BilletType;
 use writerblog\Form\Type\CommentType;
+use writerblog\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -68,9 +70,8 @@ class AdminController {
             $app['dao.comment']->save($comment);
             $app['session']->getFlashBag()->add('success', 'Your comment was successfully updated.');
         }
-        $commentFormView = $commentForm->createView();
         return $app['twig']->render('comment_form.html.twig', array(
-            'commentForm' => $commentFormView
+            'commentForm' => $commentForm->createView()
         ));
     }
 
@@ -87,6 +88,46 @@ class AdminController {
         $app['dao.billet']->update($billet);
         // success message
         $app['session']->getFlashBag()->add('success', 'Your comment was successfully deleted.');        
+        return $app->redirect($app['url_generator']->generate('admin'));        
+    }
+
+    public function userAddAction(Request $request, Application $app) {
+        $user = new User();
+        $userForm = $app['form.factory']->create(UserType::class, $user);
+        $userForm->handleRequest($request);
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+            $salt = substr(md5(time()), 0, 23);
+            $user->setSalt($salt);
+            $encoder = $app['security.encoder.bcrypt'];
+            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $user->setPassword($password); 
+            $app['dao.user']->save($user);
+            $app['session']->getFlashBag()->add('success', 'A user was successfully created.');
+        }
+        return $app['twig']->render('user_form.html.twig', array(
+            'userForm' => $userForm->createView()
+        ));
+    }
+
+    public function userEditAction($id, Request $request, Application $app) {
+        $user = $app['dao.user']->read($id);
+        $userForm = $app['form.factory']->create(UserType::class, $user);
+        $userForm->handleRequest($request);
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+            $password = $app['security.encoder.bcrypt']->encodePassword($user->getPassword(), $user->getSalt());
+            $user->setPassword($password); 
+            $app['dao.user']->save($user);
+            $app['session']->getFlashBag()->add('success', 'The user was successfully updated');
+        }
+        return $app['twig']->render('user_form.html.twig', array(
+            'userForm' => $userForm->createView()
+        ));
+    }
+
+    public function userDeleteAction($id, Request $request, Application $app) {
+        $app['dao.comment']->deleteAllByUser($id);
+        $app['dao.user']->delete($id);
+        $app['session']->getFlashBag()->add('success', 'The user was successfully deleted');        
         return $app->redirect($app['url_generator']->generate('admin'));        
     }
 }

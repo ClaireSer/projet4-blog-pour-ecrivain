@@ -100,13 +100,13 @@
                             <tr>
                                 <td>{{ user.username }}</a></td>
                                 <td>{{ user.role }}</td>
-                                <td><span class="glyphicon glyphicon-wrench"></span></td>
-                                <td><span class="glyphicon glyphicon-trash"></span></td>
+                                <td><a href="{{ path('admin_user_edit', {'id': user.id}) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                                <td><a href="{{ path('admin_user_delete', {'id': user.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-primary btn-outline btn-lg">Ajouter un utilisateur</button>                    
+                    <a href="{{ path('admin_user_add') }}"><button type="button" class="btn btn-primary btn-outline btn-lg">Ajouter un utilisateur</button></a>
                 </div>
             </div>
         </div>
