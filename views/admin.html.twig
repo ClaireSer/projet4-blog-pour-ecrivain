@@ -41,7 +41,11 @@
                             <td><a href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></td>
                             <td>{{ billet.content|truncate(70) }}</td>
                             <td>{{ billet.dateAjout|date("d/m/y") }}</td>
-                            <td>{{ billet.dateModif|date("d/m/y") }}</td>
+                            {% if billet.dateModif != "0000-00-00" %}
+                                <td>{{ billet.dateModif|date("d/m/y") }}</td>
+                            {% else %}
+                                <td>-</td>
+                            {% endif %}                            
                             <td><a href="{{ path('admin_billet_edit', { 'id': billet.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
                             <td><a href="{{ path('admin_billet_delete', { 'id': billet.id }) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>
@@ -71,8 +75,8 @@
                                 <td>{{ comment.author.username }}</td>
                                 <td>{{ comment.billet.title }}</td>
                                 <td>{{ comment.date|date("d/m/y") }}</td>
-                                <td><span class="glyphicon glyphicon-wrench"></span></td>
-                                <td><span class="glyphicon glyphicon-trash"></span></td>
+                                <td><a href="{{ path('admin_comment_edit', {'id': comment.id}) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                                <td><a href="{{ path('admin_comment_delete', {'id': comment.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

@@ -43,6 +43,16 @@ class CommentDAO extends DAO {
         return $dataComment;
     }
 
+    public function read($id) {
+        $sql = "select * from t_comment where com_id = ?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+        if ($row) {
+            return $this->buildDomainObject($row);
+        } else {
+            throw new \Exception("No comment matching id : " . $id);
+        }
+    }
+
     public function buildDomainObject($row) {
         $comment = new Comment();
         $comment->setId($row['com_id']);
@@ -79,5 +89,9 @@ class CommentDAO extends DAO {
 
     public function deleteCommentsByIdBillet($id) {
         $this->getDb()->delete('t_comment', array('billet_id' => $id));
+    }
+
+    public function delete($id) {
+        $this->getDb()->delete('t_comment', array('com_id' => $id));        
     }
 }

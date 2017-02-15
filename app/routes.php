@@ -25,11 +25,11 @@ $app->get('/admin/billet/{id}/delete', "writerblog\Controller\AdminController::b
 
 
 // // comment controller 
-// $app->get('/admin/comment/{id}/edit', "writerblog\Controller\AdminController::commentEditAction")
-// ->bind('admin_comment_edit');
+$app->match('/admin/comment/{id}/edit', "writerblog\Controller\AdminController::commentEditAction")
+->bind('admin_comment_edit');
 
-// $app->get('/admin/comment/delete', "writerblog\Controller\AdminController::commentDeleteAction")
-// ->bind('admin_comment_delete');
+$app->get('/admin/comment/{id}/delete', "writerblog\Controller\AdminController::commentDeleteAction")
+->bind('admin_comment_delete');
 
 
 // // user controller
