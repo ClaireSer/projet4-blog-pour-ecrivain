@@ -56,7 +56,7 @@ class AdminController {
     }
 
     public function billetDeleteAction($id, Request $request, Application $app) {
-        $app['dao.comment']->deleteCommentsByIdBillet($id);
+        $app['dao.comment']->deleteAllByIdBillet($id);
         $app['dao.billet']->deleteBillet($id);
         $app['session']->getFlashBag()->add('success', 'Your billet was successfully deleted.');
         return $app->redirect($app['url_generator']->generate('admin'));
@@ -125,11 +125,19 @@ class AdminController {
     }
 
     public function userDeleteAction($id, Request $request, Application $app) {
-        $app['dao.comment']->deleteAllByUser($id);
+        // delete all comments from a user
+        $app['dao.comment']->deleteAllByIdUser($id);
+        // delete the user
         $app['dao.user']->delete($id);
+        // update amount of comments to every billet
+        $billets = $app['dao.billet']->readAll();
+        foreach ($billets as $billet) {
+            $nbComments = $app['dao.billet']->countComments($billet->getId());
+            $billet->setNbComments($nbComments);
+            $app['dao.billet']->update($billet);
+        }
+        // success message
         $app['session']->getFlashBag()->add('success', 'The user was successfully deleted');        
         return $app->redirect($app['url_generator']->generate('admin'));        
     }
 }
-
-        

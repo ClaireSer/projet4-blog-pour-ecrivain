@@ -33,7 +33,7 @@ class CommentDAO extends DAO {
     }
 
     public function readAll() {
-        $sql = "select * from t_comment order by com_id desc";
+        $sql = "select * from t_comment order by billet_id desc";
         $result = $this->getDb()->fetchAll($sql);
         $dataComment = array();
         foreach ($result as $row) {
@@ -87,11 +87,11 @@ class CommentDAO extends DAO {
         }
     }
 
-    public function deleteCommentsByIdBillet($id) {
+    public function deleteAllByIdBillet($id) {
         $this->getDb()->delete('t_comment', array('billet_id' => $id));
     }
 
-    public function deleteAllByUser($id) {
+    public function deleteAllByIdUser($id) {
         $this->getDb()->delete('t_comment', array('user_id' => $id));        
     }
 
