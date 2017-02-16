@@ -14,7 +14,7 @@
                     (modifié le : {{ billet.dateModif|date("d/m/y") }})
                 {% endif %}</strong><br/>
                 <i>{{ billet.nbComments }} commentaires</i></p>
-                <p>{{ billet.content | truncate(200) }}</p>
+                <p>{{ billet.content | truncate(200)|raw }}</p>
                 <p><a href="{{ path('billet', { 'id': billet.id }) }}">Lire la suite</a></p>
             </div>
         </div>

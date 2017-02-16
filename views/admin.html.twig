@@ -39,7 +39,7 @@
                     {% for billet in billets %}
                         <tr>
                             <td><a href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></td>
-                            <td>{{ billet.content|truncate(70) }}</td>
+                            <td>{{ billet.content|truncate(70)|raw }}</td>
                             <td>{{ billet.dateAjout|date("d/m/y") }}</td>
                             {% if billet.dateModif != "0000-00-00" %}
                                 <td>{{ billet.dateModif|date("d/m/y") }}</td>
