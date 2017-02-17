@@ -4,13 +4,20 @@
 
 {% block content %}
 
-<h1>{{ block('title') }}</h1>
-
 {% for flashMessage in app.session.flashbag.get('success') %}
 <div class="alert alert-success">
     {{ flashMessage }}
 </div>
 {% endfor %}
+
+<div class="container">
+    <div class="row">
+    <h2>{{ billet.title }}</h2>
+    <p>{{ billet.content|raw }}</p>
+    </div>
+</div>
+
+<h1>{{ block('title') }}</h1>
 
 <div class="container well">
         <div class="row">

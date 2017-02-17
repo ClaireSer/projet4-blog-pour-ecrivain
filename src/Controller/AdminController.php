@@ -36,7 +36,9 @@ class AdminController {
         }
         $billetFormView = $billetForm->createView();
         return $app['twig']->render('billet_form.html.twig', array(
-            'billetForm' => $billetFormView
+            'billetForm' => $billetFormView,
+            'title' => 'Ajouter un billet',
+            'messageButton' => 'Ajouter'
         ));
     }
 
@@ -51,7 +53,9 @@ class AdminController {
         }
         $billetFormView = $billetForm->createView();
         return $app['twig']->render('billet_form.html.twig', array(
-            'billetForm' => $billetFormView
+            'billetForm' => $billetFormView,
+            'title' => 'Editer un billet',
+            'messageButton' => 'Modifier'            
         ));
     }
 
@@ -64,6 +68,7 @@ class AdminController {
 
     public function commentEditAction($id, Request $request, Application $app) {
         $comment = $app['dao.comment']->read($id);
+        $billet = $comment->getBillet();
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
@@ -71,7 +76,8 @@ class AdminController {
             $app['session']->getFlashBag()->add('success', 'Your comment was successfully updated.');
         }
         return $app['twig']->render('comment_form.html.twig', array(
-            'commentForm' => $commentForm->createView()
+            'commentForm' => $commentForm->createView(),
+            'billet' => $billet
         ));
     }
 

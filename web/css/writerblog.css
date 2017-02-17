@@ -55,19 +55,21 @@ h2 a:hover {
 .admin .row {
     padding: 20px;
 }
-.index p:nth-child(5) {
+
+.index .comments {
     font-style: italic;
+}
+.index .suite {
     text-align: right;
 }
-.index p:nth-child(4) {
-    text-align: right;    
+.index .suite, .index .date, .index .comments {
+    font-size: 16px;        
 }
-.index p:nth-child(2) {
-    font-size: 16px;
-}
+
 th:nth-last-child(-n+3), td:nth-last-child(-n+3) {
     text-align: center;
 }
+
 /*color button */
 .btn-outline {
     background-color: transparent;
