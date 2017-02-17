@@ -82,3 +82,6 @@ th:nth-last-child(-n+3), td:nth-last-child(-n+3) {
 .btn-primary.btn-outline:hover {
     color: #fff;
 }
+.admin a:hover {
+    cursor: pointer;
+}

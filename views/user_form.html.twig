@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}Ajouter un utilisateur{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-pencil"></span> Envoyer
+                        <span class="glyphicon glyphicon-pencil"></span> {{ messageButton }}
                     </button>
                 </div>
             {{ form_end(userForm) }}

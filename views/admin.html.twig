@@ -47,7 +47,28 @@
                                 <td>-</td>
                             {% endif %}                            
                             <td><a href="{{ path('admin_billet_edit', { 'id': billet.id }) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
-                            <td><a href="{{ path('admin_billet_delete', { 'id': billet.id }) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            <td><a data-toggle="modal" data-target="#modalDeleteBillet{{ billet.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                        
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalDeleteBillet{{ billet.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteBilletLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="modalDeleteBilletLabel">Confirmation requise</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Etes-vous sûr de vouloir supprimer l'élément ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{{ path('admin_billet_delete', { 'id': billet.id }) }}">
+                                                <button class="btn btn-danger btn-lg">Supprimer</button>
+                                            </a>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -71,12 +92,33 @@
                         <tbody>
                         {% for comment in comments %}
                             <tr>
-                                <td>{{ comment.content }}</a></td>
+                                <td>{{ comment.content }}</td>
                                 <td>{{ comment.author.username }}</td>
                                 <td>{{ comment.billet.title }}</td>
                                 <td>{{ comment.date|date("d/m/y") }}</td>
                                 <td><a href="{{ path('admin_comment_edit', {'id': comment.id}) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
-                                <td><a href="{{ path('admin_comment_delete', {'id': comment.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                <td><a data-toggle="modal" data-target="#modalDeleteComment{{ comment.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalDeleteComment{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteCommentLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="modalDeleteCommentLabel">Confirmation requise</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                Etes-vous sûr de vouloir supprimer l'élément ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="{{ path('admin_comment_delete', {'id': comment.id}) }}">
+                                                    <button class="btn btn-danger btn-lg">Supprimer</button>
+                                                </a>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -98,10 +140,37 @@
                         <tbody>
                         {% for user in users %}
                             <tr>
-                                <td>{{ user.username }}</a></td>
+                                <td>{{ user.username }}</td>
                                 <td>{{ user.role }}</td>
                                 <td><a href="{{ path('admin_user_edit', {'id': user.id}) }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
-                                <td><a href="{{ path('admin_user_delete', {'id': user.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                <td>
+                                    {% if app.user and is_granted('ROLE_ADMIN') and user.username != app.user.username %}
+                                        <a data-toggle="modal" data-target="#modalDeleteUser{{ user.id }}"><span class="glyphicon glyphicon-trash"></span></a>
+                                    {% else %}
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalDeleteUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUserLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="modalDeleteUserLabel">Confirmation requise</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                Etes-vous sûr de vouloir supprimer l'élément ? 
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="{{ path('admin_user_delete', {'id': user.id}) }}">
+                                                    <button class="btn btn-danger btn-lg">Supprimer</button>
+                                                </a>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+
                             </tr>
                         {% endfor %}
                         </tbody>

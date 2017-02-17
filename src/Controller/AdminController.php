@@ -111,7 +111,9 @@ class AdminController {
             $app['session']->getFlashBag()->add('success', 'A user was successfully created.');
         }
         return $app['twig']->render('user_form.html.twig', array(
-            'userForm' => $userForm->createView()
+            'userForm' => $userForm->createView(),
+            'title' => 'Ajouter un utilisateur',
+            'messageButton' => 'Ajouter'
         ));
     }
 
@@ -126,7 +128,9 @@ class AdminController {
             $app['session']->getFlashBag()->add('success', 'The user was successfully updated');
         }
         return $app['twig']->render('user_form.html.twig', array(
-            'userForm' => $userForm->createView()
+            'userForm' => $userForm->createView(),
+            'title' => 'Editer un utilisateur',
+            'messageButton' => 'Modifier'
         ));
     }
 
