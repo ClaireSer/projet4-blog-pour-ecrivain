@@ -6,6 +6,11 @@ use writerblog\Domain\Billet;
 
 class BilletDAO extends DAO {
 
+    /**
+     * Creates a billet into the database.
+     *
+     * @param \writerblog\Domain\Billet $billet The billet to create
+     */
     public function create(Billet $billet) {
         $billetArray = array(
             'billet_title' => $billet->getTitle(),
@@ -18,6 +23,11 @@ class BilletDAO extends DAO {
         $billet->setId($id);
     }
 
+    /**
+     * Return a list of all billets, sorted by id (most recent first).
+     *
+     * @return array a list of all billets.
+     */
     public function readAll() {
         $sql = 'select * from t_billet order by billet_id desc';
         $result = $this->getDb()->fetchAll($sql);
@@ -29,6 +39,13 @@ class BilletDAO extends DAO {
         return $billets;
     }
 
+    /**
+     * Returns a billet matching the supplied id.
+     *
+     * @param integer $id The billet id
+     *
+     * @return \writerblog\Domain\Billet|throws an exception if no matching billet is found
+     */
     public function read($id) {
         $sql = 'select * from t_billet where billet_id = ?';
         $result = $this->getDb()->fetchAssoc($sql, array($id));
@@ -39,6 +56,11 @@ class BilletDAO extends DAO {
         }
     }
 
+    /**
+     * Updates a billet.
+     *
+     * @param \writerblog\Domain\Billet $billet The billet to update
+     */
     public function update(Billet $billet) {
         $billetArray = array(
             'billet_title' => $billet->getTitle(),
@@ -50,10 +72,21 @@ class BilletDAO extends DAO {
         $this->getDb()->update('t_billet', $billetArray, array('billet_id' => $billet->getId()));
     }
     
+    /**
+     * Removes a billet from the database.
+     *
+     * @param integer $id The billet id.
+     */
     public function deleteBillet($id) {
         $this->getDb()->delete('t_billet', array('billet_id' => $id));
     }
     
+    /**
+     * Creates a billet object based on a DB row.
+     *
+     * @param array $row The DB row containing billet data.
+     * @return \writerblog\Domain\Billet
+     */
     public function buildDomainObject($row) {
         $billet = new Billet();
         $billet->setId($row['billet_id']);
@@ -65,6 +98,12 @@ class BilletDAO extends DAO {
         return $billet;
     }
 
+    /**
+     * Count the amount of comments from a billet.
+     *
+     * @param integer $idBillet The billet id.
+     * @return integer The amount of comments
+     */
     public function countComments($idBillet) {
         $sql = 'select * from t_comment where billet_id = ?';
         return $this->getDb()->executeQuery($sql, array($idBillet))->rowCount();

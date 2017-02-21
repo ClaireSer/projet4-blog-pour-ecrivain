@@ -10,6 +10,11 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 class UserDAO extends DAO implements UserProviderInterface {
 
+    /**
+     * Returns a list of all users, sorted by role and name.
+     *
+     * @return array A list of all users.
+     */
     public function readAll() {
         $sql = "select * from t_user order by user_role, user_name";
         $result = $this->getDb()->fetchAll($sql);
@@ -21,6 +26,13 @@ class UserDAO extends DAO implements UserProviderInterface {
         return $dataUser;
     }
 
+    /**
+     * Returns a user matching the supplied id.
+     *
+     * @param integer $id The user id.
+     *
+     * @return \writerblog\Domain\User|throws an exception if no matching user is found
+     */
     public function read($id) {
         $sql = "select * from t_user where user_id = ?";
         $result = $this->getDb()->fetchAssoc($sql, array($id));
@@ -31,6 +43,12 @@ class UserDAO extends DAO implements UserProviderInterface {
         }
     }
 
+    /**
+     * Creates a user object based on a DB row.
+     *
+     * @param array $row The DB row containing user data.
+     * @return \writerblog\Domain\User
+     */
     public function buildDomainObject($row) {
         $user = new User();
         $user->setId($row['user_id']);
@@ -41,6 +59,11 @@ class UserDAO extends DAO implements UserProviderInterface {
         return $user;
     }
 
+    /**
+     * Saves a user into the database.
+     *
+     * @param \writerblog\Domain\User $user The user to save
+     */
     public function save(User $user) {
         $userData = array(
             'user_name' => $user->getUsername(),
@@ -57,6 +80,11 @@ class UserDAO extends DAO implements UserProviderInterface {
         }
     }
 
+    /**
+     * Removes a user from the database.
+     *
+     * @param integer $id The user id.
+     */
     public function delete($id) {
         $this->getDb()->delete('t_user', array('user_id' => $id));
     }

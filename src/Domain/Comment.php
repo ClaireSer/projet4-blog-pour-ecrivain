@@ -6,10 +6,40 @@ use writerblog\Domain\Billet;
 use writerblog\Domain\User;
 
 class Comment {
+
+    /**
+     * Comment id.
+     *
+     * @var integer
+     */
     private $id;
+
+    /**
+     * Comment content.
+     *
+     * @var string
+     */
     private $content;
+    
+    /**
+     * Comment author.
+     *
+     * @var \writerblog\Domain\User
+     */
     private $author;
+
+    /**
+     * Associated billet.
+     *
+     * @var \writerblog\Domain\Billet
+     */
     private $billet;
+
+    /**
+     * Date the comment was posted.
+     *
+     * @var date
+     */
     private $date;
 
     public function getId() {

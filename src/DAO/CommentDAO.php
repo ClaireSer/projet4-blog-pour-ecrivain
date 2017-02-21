@@ -7,8 +7,15 @@ use writerblog\DAO\BilletDAO;
 use writerblog\DAO\UserDAO;
 
 class CommentDAO extends DAO {
-    
+
+    /**
+     * @var \writerblog\DAO\BilletDAO
+     */
     private $billetDAO;
+
+    /**
+     * @var \writerblog\DAO\UserDAO
+     */
     private $userDAO;
     
     public function setBilletDAO(BilletDAO $billetDAO) {
@@ -20,7 +27,13 @@ class CommentDAO extends DAO {
         return $this;
     }
 
-
+    /**
+     * Return a list of all comments for a billet, sorted by id (most recent first).
+     *
+     * @param integer $idBillet The billet id.
+     *
+     * @return array A list of all comments for the billet.
+     */
     public function readAllByIdBillet($idBillet) {
         $sql = "select * from t_comment where billet_id = ? order by com_id desc";
         $result = $this->getDb()->fetchAll($sql, array($idBillet));
@@ -32,6 +45,11 @@ class CommentDAO extends DAO {
         return $dataComment;
     }
 
+    /**
+     * Returns a list of all comments, sorted by id (most recent first).
+     *
+     * @return array A list of all comments.
+     */
     public function readAll() {
         $sql = "select * from t_comment order by billet_id desc";
         $result = $this->getDb()->fetchAll($sql);
@@ -43,6 +61,13 @@ class CommentDAO extends DAO {
         return $dataComment;
     }
 
+    /**
+     * Returns a comment matching the supplied id.
+     *
+     * @param integer $id The comment id
+     *
+     * @return \writerblog\Domain\Comment|throws an exception if no matching comment is found
+     */
     public function read($id) {
         $sql = "select * from t_comment where com_id = ?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
@@ -53,6 +78,12 @@ class CommentDAO extends DAO {
         }
     }
 
+    /**
+     * Creates a Comment object based on a DB row.
+     *
+     * @param array $row The DB row containing comment data.
+     * @return \writerblog\Domain\Comment
+     */
     public function buildDomainObject($row) {
         $comment = new Comment();
         $comment->setId($row['com_id']);
@@ -71,6 +102,11 @@ class CommentDAO extends DAO {
         return $comment;
     }
 
+    /**
+     * Saves a comment into the database.
+     *
+     * @param \writerblog\Domain\Comment $comment The comment to save
+     */
     public function save(Comment $comment) {
         $dataComment = array(
             'com_content' => $comment->getContent(),
@@ -87,14 +123,29 @@ class CommentDAO extends DAO {
         }
     }
 
+    /**
+     * Removes all comments for a billet
+     *
+     * @param $id The id of the billet
+     */
     public function deleteAllByIdBillet($id) {
         $this->getDb()->delete('t_comment', array('billet_id' => $id));
     }
 
+     /**
+     * Removes all comments for a user
+     *
+     * @param integer $id The id of the user
+     */
     public function deleteAllByIdUser($id) {
         $this->getDb()->delete('t_comment', array('user_id' => $id));        
     }
 
+    /**
+     * Removes a comment from the database.
+     *
+     * @param integer $id The comment id
+     */
     public function delete($id) {
         $this->getDb()->delete('t_comment', array('com_id' => $id));        
     }

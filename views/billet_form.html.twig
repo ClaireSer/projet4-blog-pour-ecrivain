@@ -13,29 +13,37 @@
 {% endfor %}
 
 <div class="container well">
-        <div class="row">
-            <div class="col-sm-offset-3 col-sm-6">
-                {{ form_start(billetForm) }}
-                    <div class="form-group">
-                        {{ form_errors(billetForm.title) }}
-                        {{ form_widget(billetForm.title, {'attr': {
-                            'class': 'form-control',
-                            'placeholder': 'Insérez votre titre'
-                        }}) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_errors(billetForm.content) }}
-                        {{ form_widget(billetForm.content, {'attr': {
-                            'rows': '12'
-                        }}) }}
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-pencil"></span> {{ messageButton }}
-                        </button>
-                    </div>
-                {{ form_end(billetForm) }}
+    {{ form_start(billetForm, { 'attr': {'class': 'form-horizontal'} }) }}
+        <div class="form-group">
+            {{ form_label(billetForm.title, 'Titre', { 'label_attr':  {
+                'class': 'col-sm-3 control-label'
+            }}) }}
+            <div class="col-sm-6">
+                {{ form_errors(billetForm.title) }}
+                {{ form_widget(billetForm.title, {'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Insérez votre titre'
+                }}) }}
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            {{ form_label(billetForm.content, 'Contenu', { 'label_attr':  {
+                'class': 'col-sm-3 control-label'
+            }}) }}        
+            <div class="col-sm-6">                        
+                {{ form_errors(billetForm.content) }}
+                {{ form_widget(billetForm.content, {'attr': {
+                    'rows': '12'
+                }}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-3">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span> {{ messageButton }}
+                </button>
+            </div>
+        </div>
+    {{ form_end(billetForm) }}
 </div>
 {% endblock %}

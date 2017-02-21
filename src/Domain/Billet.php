@@ -3,11 +3,47 @@
 namespace writerblog\Domain;
 
 class Billet {
+
+    /**
+     * Billet id.
+     *
+     * @var integer
+     */
     private $id;
+
+     /**
+     * Billet title.
+     *
+     * @var string
+     */
     private $title;
+
+     /**
+     * Billet content.
+     *
+     * @var string
+     */
     private $content;
+
+     /**
+     * Date the billet was posted.
+     *
+     * @var datetime
+     */
     private $dateAjout;
+
+    /**
+     * Date the billet was updated.
+     *
+     * @var datetime
+     */
     private $dateModif;
+
+    /**
+     * Amount of comments associated to a billet.
+     *
+     * @var integer
+     */
     private $nbComments;
 
     public function getId() {

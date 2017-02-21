@@ -12,51 +12,71 @@
 </div>
 {% endfor %}
 
-{% if form_errors(userForm.password.first) %}
+{% if form_errors(userForm) %}
 <div class="alert alert-danger">
-    {{ form_errors(userForm.password.first) }}
+    {{ form_errors(userForm) }}
 </div>
 {% endif %}
 
 <div class="container well">
-    <div class="row">
-        <div class="col-sm-offset-3 col-sm-6">
-            {{ form_start(userForm) }}
-                <div class="form-group">
-                    {{ form_errors(userForm.username) }}
-                    {{ form_widget(userForm.username, {'attr': {
-                        'class': 'form-control',
-                        'placeholder': 'Insérez votre nom d\'utilisateur'
-                    }}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_errors(userForm.password.first) }}
-                    {{ form_widget(userForm.password.first, {'attr': {
-                        'class': 'form-control',
-                        'placeholder': 'Composez votre mot de passe'
-                    }}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_errors(userForm.password.second) }}
-                    {{ form_widget(userForm.password.second, {'attr': {
-                        'class': 'form-control',
-                        'placeholder': 'Composez votre mot de passe'
-                    }}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_errors(userForm.role) }}
-                    {{ form_widget(userForm.role, {'attr': {
-                        'class': 'form-control'
-                    }}) }}
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-pencil"></span> {{ messageButton }}
-                    </button>
-                </div>
-            {{ form_end(userForm) }}
+    {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
+        <div class="form-group">
+            {{ form_label(userForm.username, 'Nom d\'utilisateur', { 'label_attr':  {
+                'class': 'col-sm-4 control-label'
+            }}) }}
+            <div class="col-sm-6">
+                {{ form_errors(userForm.username) }}
+                {{ form_widget(userForm.username, {'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Insérez votre nom d\'utilisateur'
+                }}) }}
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            {{ form_label(userForm.password.first, 'Mot de passe', { 'label_attr':  {
+                'class': 'col-sm-4 control-label'
+            }}) }}
+            <div class="col-sm-6">
+                {{ form_errors(userForm.password.first) }}
+                {{ form_widget(userForm.password.first, {'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Composez votre mot de passe',
+                    'required': true
+                }}) }}  
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(userForm.password.second, 'Confirmez le mot de passe', { 'label_attr':  {
+                'class': 'col-sm-4 control-label'
+            }}) }}
+            <div class="col-sm-6">
+                {{ form_errors(userForm.password.second) }}
+                {{ form_widget(userForm.password.second, {'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Composez votre mot de passe'
+                }}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(userForm.role, 'Rôle', { 'label_attr':  {
+                'class': 'col-sm-4 control-label'
+            }}) }}
+            <div class="col-sm-6">
+                {{ form_errors(userForm.role) }}
+                {{ form_widget(userForm.role, {'attr': {
+                    'class': 'form-control'
+                }}) }}
+            </div>
+        </div>
+        
+        <div class="form-group" id="updateUser">
+            <div class="col-sm-offset-4 col-sm-3">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span> {{ messageButton }}
+                </button>
+            </div>
+        </div>
+    {{ form_end(userForm) }}
 </div>
 
 {% endblock %}

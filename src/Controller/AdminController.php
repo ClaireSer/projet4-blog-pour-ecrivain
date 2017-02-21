@@ -9,10 +9,16 @@ use writerblog\Form\Type\BilletType;
 use writerblog\Form\Type\CommentType;
 use writerblog\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormError;
 
 
 class AdminController {
 
+    /**
+     * Admin home page controller.
+     *
+     * @param Application $app Silex application
+     */
     public function indexAction(Application $app) {
         $billets = $app['dao.billet']->readAll();
         $comments = $app['dao.comment']->readAll();
@@ -24,6 +30,12 @@ class AdminController {
         ));
     }
 
+    /**
+     * Add billet controller.
+     *
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
     public function billetAddAction(Request $request, Application $app) {
         $billet = new Billet();
         $billet->setDateAjout(date('Y-m-d'));
@@ -42,6 +54,13 @@ class AdminController {
         ));
     }
 
+    /**
+     * Edit billet controller.
+     *
+     * @param integer $id Billet id
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
     public function billetEditAction($id, Request $request, Application $app) {
         $billet = $app['dao.billet']->read($id);
         $billet->setDateModif(date('Y-m-d'));
@@ -59,13 +78,26 @@ class AdminController {
         ));
     }
 
-    public function billetDeleteAction($id, Request $request, Application $app) {
+    /**
+     * Delete billet controller.
+     *
+     * @param integer $id Billet id
+     * @param Application $app Silex application
+     */
+    public function billetDeleteAction($id, Application $app) {
         $app['dao.comment']->deleteAllByIdBillet($id);
         $app['dao.billet']->deleteBillet($id);
         $app['session']->getFlashBag()->add('success', 'Your billet was successfully deleted.');
         return $app->redirect($app['url_generator']->generate('admin'));
     }
 
+    /**
+     * Edit comment controller.
+     *
+     * @param integer $id Comment id
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
     public function commentEditAction($id, Request $request, Application $app) {
         $comment = $app['dao.comment']->read($id);
         $billet = $comment->getBillet();
@@ -81,6 +113,12 @@ class AdminController {
         ));
     }
 
+    /**
+     * Delete comment controller.
+     *
+     * @param integer $id Comment id
+     * @param Application $app Silex application
+     */
     public function commentDeleteAction($id, Request $request, Application $app) {
         // get billet object from a comment
         $comment = $app['dao.comment']->read($id);
@@ -97,6 +135,12 @@ class AdminController {
         return $app->redirect($app['url_generator']->generate('admin'));        
     }
 
+    /**
+     * Add user controller.
+     *
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
     public function userAddAction(Request $request, Application $app) {
         $user = new User();
         $userForm = $app['form.factory']->create(UserType::class, $user);
@@ -117,11 +161,24 @@ class AdminController {
         ));
     }
 
+     /**
+     * Edit user controller.
+     *
+     * @param integer $id User id
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
     public function userEditAction($id, Request $request, Application $app) {
         $user = $app['dao.user']->read($id);
         $userForm = $app['form.factory']->create(UserType::class, $user);
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+            // if ($userForm->isValid()) {
+            //     echo "is valid"; return false;
+            // } else {
+            //     echo "notvalide"; return false;
+            // }
+            
             $password = $app['security.encoder.bcrypt']->encodePassword($user->getPassword(), $user->getSalt());
             $user->setPassword($password); 
             $app['dao.user']->save($user);
@@ -134,7 +191,13 @@ class AdminController {
         ));
     }
 
-    public function userDeleteAction($id, Request $request, Application $app) {
+    /**
+     * Delete user controller.
+     *
+     * @param integer $id User id
+     * @param Application $app Silex application
+     */
+    public function userDeleteAction($id, Application $app) {
         // delete all comments from a user
         $app['dao.comment']->deleteAllByIdUser($id);
         // delete the user

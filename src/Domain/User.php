@@ -3,13 +3,45 @@
 namespace writerblog\Domain;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class User implements UserInterface {
 
+    /**
+     * User id.
+     *
+     * @var integer
+     */
     private $id;
+    
+    /**
+     * User user name.
+     *
+     * @var string
+     */
     private $username;
+    
+    /**
+     * User password.
+     *
+     * @var string
+     * @Assert\NotBlank()
+     */
     private $password;
+
+    /**
+     * Salt that was originally used to encode the password.
+     *
+     * @var string
+     */
     private $salt;
+
+   /**
+     * Role.
+     * Values : ROLE_USER or ROLE_ADMIN.
+     *
+     * @var string
+     */
     private $role;
 
     public function getId() {
@@ -20,6 +52,9 @@ class User implements UserInterface {
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getUsername() {
         return $this->username;
     }
@@ -28,6 +63,9 @@ class User implements UserInterface {
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPassword() {
         return $this->password;
     }
@@ -36,6 +74,9 @@ class User implements UserInterface {
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getSalt() {
         return $this->salt;
     }
@@ -52,9 +93,15 @@ class User implements UserInterface {
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getRoles() {
         return array($this->getRole());
     }
     
+    /**
+     * @inheritDoc
+     */
     public function eraseCredentials() {}
 }
