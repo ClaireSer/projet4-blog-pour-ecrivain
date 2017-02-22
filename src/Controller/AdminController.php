@@ -173,16 +173,15 @@ class AdminController {
         $userForm = $app['form.factory']->create(UserType::class, $user);
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()) {
-            // if ($userForm->isValid()) {
-            //     echo "is valid"; return false;
-            // } else {
-            //     echo "notvalide"; return false;
-            // }
-            
-            $password = $app['security.encoder.bcrypt']->encodePassword($user->getPassword(), $user->getSalt());
-            $user->setPassword($password); 
-            $app['dao.user']->save($user);
-            $app['session']->getFlashBag()->add('success', 'The user was successfully updated');
+            if ($user->getPassword() == null) {
+                $app['session']->getFlashBag()->add('notice', 'Le mot de passe ne doit pas être vide.');
+                return $app->redirect($app['url_generator']->generate('admin_user_edit', array('id' => $id)));        
+            } else {
+                $password = $app['security.encoder.bcrypt']->encodePassword($user->getPassword(), $user->getSalt());
+                $user->setPassword($password); 
+                $app['dao.user']->save($user);
+                $app['session']->getFlashBag()->add('success', 'The user was successfully updated');
+            }
         }
         return $app['twig']->render('user_form.html.twig', array(
             'userForm' => $userForm->createView(),
