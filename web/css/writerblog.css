@@ -9,13 +9,22 @@ body {
     position: relative;
     padding-bottom: 80px;
     font-family: 'Times New Roman', Times, serif;
+    background-image: url("../images/linedpaper.png");
+    background-attachment: fixed;
+}
+.navbar {
+    background: whitesmoke;
+    border: 1px solid lightgray;
+}
+a, a:hover {
+    color: #ff6868;
 }
 footer {
     font-style: italic;
     background-color: grey;
     color: white;
     text-align: center;
-    position: absolute;
+    position: absolute; 
     bottom: 0;
     width: 100%;
     padding: 10px;
@@ -26,12 +35,15 @@ footer p {
 }
 h1 {
     text-align:center;
+    font-size: 50px;  
     font-style: italic;
-    font-size: 40px;    
+    color: #297070;  
+    padding: 20px;
 }
 h2 a, h2 a:hover {
-    color: mediumblue;
+    color: lightseagreen;
     text-decoration: none;
+    font-weight: bold;
 }
 h2 a:hover {
     text-shadow: 1px 1px 1px black;
@@ -65,23 +77,33 @@ h2 a:hover {
 .index .suite, .index .date, .index .comments {
     font-size: 16px;        
 }
-
+.index .billet {
+    box-shadow: 3px 3px 10px grey;
+    margin: 20px;
+    background-color: white;
+}
 th:nth-last-child(-n+3), td:nth-last-child(-n+3) {
     text-align: center;
 }
 
-/*color button */
+/*color buttons */
 .btn-outline {
     background-color: transparent;
     color: inherit;
     transition: all .5s;
 }
 .btn-primary.btn-outline {
-    color: #428bca;
+    color: lightseagreen;
+    border: 1px solid lightseagreen;
 }
 .btn-primary.btn-outline:hover {
     color: #fff;
+    background-color: lightseagreen;
 }
 .admin a:hover {
     cursor: pointer;
+}
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:hover {
+    background-color: lightseagreen;
 }

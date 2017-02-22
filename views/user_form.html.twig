@@ -18,13 +18,13 @@
 </div>
 {% endif %}
 
-<div class="container well">
+<div class="container">
     {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
         <div class="form-group">
             {{ form_label(userForm.username, 'Nom d\'utilisateur', { 'label_attr':  {
                 'class': 'col-sm-4 control-label'
             }}) }}
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 {{ form_errors(userForm.username) }}
                 {{ form_widget(userForm.username, {'attr': {
                     'class': 'form-control',
@@ -36,7 +36,7 @@
             {{ form_label(userForm.password.first, 'Mot de passe', { 'label_attr':  {
                 'class': 'col-sm-4 control-label'
             }}) }}
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 {{ form_errors(userForm.password.first) }}
                 {{ form_widget(userForm.password.first, {'attr': {
                     'class': 'form-control',
@@ -49,7 +49,7 @@
             {{ form_label(userForm.password.second, 'Confirmez le mot de passe', { 'label_attr':  {
                 'class': 'col-sm-4 control-label'
             }}) }}
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 {{ form_errors(userForm.password.second) }}
                 {{ form_widget(userForm.password.second, {'attr': {
                     'class': 'form-control',
@@ -61,7 +61,7 @@
             {{ form_label(userForm.role, 'Rôle', { 'label_attr':  {
                 'class': 'col-sm-4 control-label'
             }}) }}
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 {{ form_errors(userForm.role) }}
                 {{ form_widget(userForm.role, {'attr': {
                     'class': 'form-control'

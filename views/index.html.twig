@@ -7,7 +7,7 @@
 {% for billet in billets %}
     <div class="container index">
         <div class="row">
-            <div class="col-sm-offset-1 col-sm-6">
+            <div class="col-sm-offset-1 col-sm-6 billet">
                 <h2><a href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></h2>
                 <div class="date">
                     <strong>Posté le {{ billet.dateAjout|date("d/m/y") }} 
