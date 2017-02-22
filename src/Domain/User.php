@@ -25,7 +25,6 @@ class User implements UserInterface {
      * User password.
      *
      * @var string
-     * @Assert\NotBlank()
      */
     private $password;
 
