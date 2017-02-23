@@ -27,7 +27,7 @@ class UserDAO extends DAO implements UserProviderInterface {
     }
 
     /**
-     * Returns a 
+     * Returns a user matching the supplied user name.
      *
      * @param string $username The user name.
      *     

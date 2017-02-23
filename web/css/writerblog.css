@@ -112,3 +112,7 @@ ul {
     padding-left: 0;
     margin-bottom: 0;
 }
+#errorPanel {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
