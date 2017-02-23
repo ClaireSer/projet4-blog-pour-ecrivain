@@ -10,6 +10,12 @@
 </div>
 {% endfor %}
 
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-danger">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
 <div class="container">
     <div class="row">
     <h2>{{ billet.title }}</h2>

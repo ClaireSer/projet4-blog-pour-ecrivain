@@ -27,6 +27,19 @@ class UserDAO extends DAO implements UserProviderInterface {
     }
 
     /**
+     * Returns a 
+     *
+     * @param string $username The user name.
+     *     
+     * @return string A user.
+     */
+    public function findUserByUsername($username) {
+        $sql = "select * from t_user where user_name = ?";
+        $row = $this->getDb()->fetchAssoc($sql, array($username));
+        return $row;
+    }
+
+    /**
      * Returns a user matching the supplied id.
      *
      * @param integer $id The user id.

@@ -22,7 +22,7 @@
                     <p>{{ billet.content | truncate(200)|raw }}</p>
                 </div>
                 <div class="suite">
-                    <a href="{{ path('billet', { 'id': billet.id }) }}">Lire la suite</a>
+                    <p><a href="{{ path('billet', { 'id': billet.id }) }}">Lire la suite</a></p>
                 </div>
             </div>
         </div>

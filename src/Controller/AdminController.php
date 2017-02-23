@@ -104,8 +104,13 @@ class AdminController {
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $app['dao.comment']->save($comment);
-            $app['session']->getFlashBag()->add('success', 'Your comment was successfully updated.');
+            if ($comment->getContent() == null) {
+                $app['session']->getFlashBag()->add('notice', 'Your comment cannot be empty.');
+                return $app->redirect($app['url_generator']->generate('admin_comment_edit', array('id' => $id)));  
+            } else {
+                $app['dao.comment']->save($comment);
+                $app['session']->getFlashBag()->add('success', 'Your comment was successfully updated.');
+            }
         }
         return $app['twig']->render('comment_form.html.twig', array(
             'commentForm' => $commentForm->createView(),
@@ -146,13 +151,22 @@ class AdminController {
         $userForm = $app['form.factory']->create(UserType::class, $user);
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()) {
-            $salt = substr(md5(time()), 0, 23);
-            $user->setSalt($salt);
-            $encoder = $app['security.encoder.bcrypt'];
-            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-            $user->setPassword($password); 
-            $app['dao.user']->save($user);
-            $app['session']->getFlashBag()->add('success', 'A user was successfully created.');
+            $username = $user->getUsername();
+            if ($app['dao.user']->findUserByUsername($username)) {
+                $app['session']->getFlashBag()->add('notice', 'Le nom d\'utilisateur existe déjà.');
+                return $app->redirect($app['url_generator']->generate('admin_user_add'));  
+            } elseif ($user->getPassword() == null) {
+                $app['session']->getFlashBag()->add('notice', 'Le mot de passe ne doit pas être vide.');
+                return $app->redirect($app['url_generator']->generate('admin_user_add'));        
+            } else {
+                $salt = substr(md5(time()), 0, 23);
+                $user->setSalt($salt);
+                $encoder = $app['security.encoder.bcrypt'];
+                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+                $user->setPassword($password); 
+                $app['dao.user']->save($user);
+                $app['session']->getFlashBag()->add('success', 'A user was successfully created.');
+            }
         }
         return $app['twig']->render('user_form.html.twig', array(
             'userForm' => $userForm->createView(),
@@ -173,7 +187,11 @@ class AdminController {
         $userForm = $app['form.factory']->create(UserType::class, $user);
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()) {
-            if ($user->getPassword() == null) {
+            $username = $user->getUsername();
+            if ($app['dao.user']->findUserByUsername($username)) {
+                $app['session']->getFlashBag()->add('notice', 'Le nom d\'utilisateur existe déjà.');
+                return $app->redirect($app['url_generator']->generate('admin_user_edit', array('id' => $id)));  
+            } elseif ($user->getPassword() == null) {
                 $app['session']->getFlashBag()->add('notice', 'Le mot de passe ne doit pas être vide.');
                 return $app->redirect($app['url_generator']->generate('admin_user_edit', array('id' => $id)));        
             } else {

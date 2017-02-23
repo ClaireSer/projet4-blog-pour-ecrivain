@@ -71,7 +71,7 @@ h2 a:hover {
 .index .comments {
     font-style: italic;
 }
-.index .suite {
+.index .suite p {
     text-align: right;
 }
 .index .suite, .index .date, .index .comments {
