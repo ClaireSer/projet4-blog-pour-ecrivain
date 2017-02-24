@@ -153,7 +153,7 @@ class AdminController {
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $username = $user->getUsername();
             $existingUser = $app['dao.user']->findUserByUsername($username);
-            if ($existingUser->getUsername() == $username) {
+            if (strtolower($existingUser->getUsername()) == strtolower($username)) {
                 $app['session']->getFlashBag()->add('notice', 'Le nom d\'utilisateur existe déjà.');
                 return $app->redirect($app['url_generator']->generate('admin_user_add'));  
             } elseif ($user->getPassword() == null) {
@@ -191,7 +191,7 @@ class AdminController {
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $newUsername = $user->getUsername();
             $existingUserName = $app['dao.user']->findUserByUsername($newUsername)->getUsername();
-            if ($existingUserName == $newUsername && $oldUsername != $newUsername) {
+            if (strtolower($oldUsername) != strtolower($newUsername) && strtolower($existingUserName) == strtolower($newUsername)) {
                 $app['session']->getFlashBag()->add('notice', 'Vous venez de modifier le nom d\'utilisateur, mais celui-ci existe déjà.');
                 return $app->redirect($app['url_generator']->generate('admin_user_edit', array('id' => $id)));  
             } elseif ($user->getPassword() == null) {
