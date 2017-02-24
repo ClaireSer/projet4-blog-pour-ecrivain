@@ -35,7 +35,7 @@ class CommentDAO extends DAO {
      * @return array A list of all comments for the billet.
      */
     public function readAllByIdBillet($idBillet) {
-        $sql = "select * from t_comment where billet_id = ? order by com_id desc";
+        $sql = "select * from P4_t_comment where billet_id = ? order by com_id desc";
         $result = $this->getDb()->fetchAll($sql, array($idBillet));
         $dataComment = array();
         foreach ($result as $row) {
@@ -51,7 +51,7 @@ class CommentDAO extends DAO {
      * @return array A list of all comments.
      */
     public function readAll() {
-        $sql = "select * from t_comment order by billet_id desc";
+        $sql = "select * from P4_t_comment order by billet_id desc";
         $result = $this->getDb()->fetchAll($sql);
         $dataComment = array();
         foreach ($result as $row) {
@@ -69,7 +69,7 @@ class CommentDAO extends DAO {
      * @return \writerblog\Domain\Comment|throws an exception if no matching comment is found
      */
     public function read($id) {
-        $sql = "select * from t_comment where com_id = ?";
+        $sql = "select * from P4_t_comment where com_id = ?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
         if ($row) {
             return $this->buildDomainObject($row);
@@ -115,9 +115,9 @@ class CommentDAO extends DAO {
             'user_id' => $comment->getAuthor()->getId()
         );
         if ($comment->getId()) {
-            $this->getDb()->update('t_comment', $dataComment, array('com_id' => $comment->getId()));
+            $this->getDb()->update('P4_t_comment', $dataComment, array('com_id' => $comment->getId()));
         } else {
-            $this->getDb()->insert('t_comment', $dataComment);
+            $this->getDb()->insert('P4_t_comment', $dataComment);
             $id = $this->getDb()->lastInsertId();
             $comment->setId($id);
         }
@@ -129,7 +129,7 @@ class CommentDAO extends DAO {
      * @param $id The id of the billet
      */
     public function deleteAllByIdBillet($id) {
-        $this->getDb()->delete('t_comment', array('billet_id' => $id));
+        $this->getDb()->delete('P4_t_comment', array('billet_id' => $id));
     }
 
      /**
@@ -138,7 +138,7 @@ class CommentDAO extends DAO {
      * @param integer $id The id of the user
      */
     public function deleteAllByIdUser($id) {
-        $this->getDb()->delete('t_comment', array('user_id' => $id));        
+        $this->getDb()->delete('P4_t_comment', array('user_id' => $id));        
     }
 
     /**
@@ -147,6 +147,6 @@ class CommentDAO extends DAO {
      * @param integer $id The comment id
      */
     public function delete($id) {
-        $this->getDb()->delete('t_comment', array('com_id' => $id));        
+        $this->getDb()->delete('P4_t_comment', array('com_id' => $id));        
     }
 }

@@ -16,7 +16,7 @@ class UserDAO extends DAO implements UserProviderInterface {
      * @return array A list of all users.
      */
     public function readAll() {
-        $sql = "select * from t_user order by user_role, user_name";
+        $sql = "select * from P4_t_user order by user_role, user_name";
         $result = $this->getDb()->fetchAll($sql);
         $dataUser = array();
         foreach ($result as $row) {
@@ -34,9 +34,9 @@ class UserDAO extends DAO implements UserProviderInterface {
      * @return string A user.
      */
     public function findUserByUsername($username) {
-        $sql = "select * from t_user where user_name = ?";
+        $sql = "select * from P4_t_user where user_name = ?";
         $row = $this->getDb()->fetchAssoc($sql, array($username));
-        return $row;
+        return $this->buildDomainObject($row);
     }
 
     /**
@@ -47,7 +47,7 @@ class UserDAO extends DAO implements UserProviderInterface {
      * @return \writerblog\Domain\User|throws an exception if no matching user is found
      */
     public function read($id) {
-        $sql = "select * from t_user where user_id = ?";
+        $sql = "select * from P4_t_user where user_id = ?";
         $result = $this->getDb()->fetchAssoc($sql, array($id));
         if ($result) {
             return $this->buildDomainObject($result);
@@ -85,9 +85,9 @@ class UserDAO extends DAO implements UserProviderInterface {
             'user_role' => $user->getRole(),
         );
         if ($user->getId()) {
-            $this->getDb()->update('t_user', $userData, array('user_id' => $user->getId()));
+            $this->getDb()->update('P4_t_user', $userData, array('user_id' => $user->getId()));
         } else {
-            $this->getDb()->insert('t_user', $userData);
+            $this->getDb()->insert('P4_t_user', $userData);
             $id = $this->getDb()->lastInsertId();
             $user->setId($id);
         }
@@ -99,7 +99,7 @@ class UserDAO extends DAO implements UserProviderInterface {
      * @param integer $id The user id.
      */
     public function delete($id) {
-        $this->getDb()->delete('t_user', array('user_id' => $id));
+        $this->getDb()->delete('P4_t_user', array('user_id' => $id));
     }
 
     /**
@@ -107,7 +107,7 @@ class UserDAO extends DAO implements UserProviderInterface {
      */
     public function loadUserByUsername($username)
     {
-        $sql = "select * from t_user where user_name = ?";
+        $sql = "select * from P4_t_user where user_name = ?";
         $result = $this->getDb()->fetchAssoc($sql, array($username));
 
         if ($result)

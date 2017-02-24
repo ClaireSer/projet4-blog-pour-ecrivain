@@ -18,7 +18,7 @@ class BilletDAO extends DAO {
             'billet_dateAjout' => $billet->getDateAjout(),
             'billet_nbComments' => $billet->getNbComments()
         );
-        $this->getDb()->insert('t_billet', $billetArray);
+        $this->getDb()->insert('P4_t_billet', $billetArray);
         $id = $this->getDb()->lastInsertId();
         $billet->setId($id);
     }
@@ -29,7 +29,7 @@ class BilletDAO extends DAO {
      * @return array a list of all billets.
      */
     public function readAll() {
-        $sql = 'select * from t_billet order by billet_id desc';
+        $sql = 'select * from P4_t_billet order by billet_id desc';
         $result = $this->getDb()->fetchAll($sql);
         $billets = array();
         foreach ($result as $row) {
@@ -47,7 +47,7 @@ class BilletDAO extends DAO {
      * @return \writerblog\Domain\Billet|throws an exception if no matching billet is found
      */
     public function read($id) {
-        $sql = 'select * from t_billet where billet_id = ?';
+        $sql = 'select * from P4_t_billet where billet_id = ?';
         $result = $this->getDb()->fetchAssoc($sql, array($id));
         if ($result) {
             return $this->buildDomainObject($result);
@@ -69,7 +69,7 @@ class BilletDAO extends DAO {
             'billet_dateModif' => $billet->getDateModif(),
             'billet_nbComments' => $billet->getNbComments()
         );
-        $this->getDb()->update('t_billet', $billetArray, array('billet_id' => $billet->getId()));
+        $this->getDb()->update('P4_t_billet', $billetArray, array('billet_id' => $billet->getId()));
     }
     
     /**
@@ -78,7 +78,7 @@ class BilletDAO extends DAO {
      * @param integer $id The billet id.
      */
     public function deleteBillet($id) {
-        $this->getDb()->delete('t_billet', array('billet_id' => $id));
+        $this->getDb()->delete('P4_t_billet', array('billet_id' => $id));
     }
     
     /**
@@ -105,7 +105,7 @@ class BilletDAO extends DAO {
      * @return integer The amount of comments
      */
     public function countComments($idBillet) {
-        $sql = 'select * from t_comment where billet_id = ?';
+        $sql = 'select * from P4_t_comment where billet_id = ?';
         return $this->getDb()->executeQuery($sql, array($idBillet))->rowCount();
     }   
 }
